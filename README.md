@@ -44,3 +44,85 @@ PS.运行之后会看到下面有数据信息在滚动，说明SNMP已经在发�
 
 #查看图表
 使用浏览器访问index.html页面，可以看到每个端口的数据流量图，默认是5分钟发送一次信息
+
+#其他监控
+由于要监控CPU和内存状态，需要安装SNMP4W2K-STD。下载地址: http://www.wtcs.org/snmp4tpc/snmp4w2k.htm
+
+好了，重點說完了，再來說說在 mrtg.cfg 這個參數檔當中你看到的幾個參數的意義吧！
+Target[裝置名稱]：
+Target[vbird.adsldns.org_2]: 2: public@192.168.1.2
+
+上面是一般的用法，其中半括號內的是裝置的名稱，同一個裝置的各參數中，這個名稱要一致！
+Target[vbird.adsldns.org_3]:`/usr/local/apache/htdocs/mrtg/cpu/mrtg.cpu`
+
+後面接的是一個自訂的加掛的可執行檔案，這個檔案執行之後，會顯示四個數據，這樣就可以繪圖了！在繪製非 MRTG 程式的預設咚咚中，這個是最常使用的方法了！
+MaxBytes[裝置名稱]：
+MaxBytes[vbird.adsldns.org_2]: 1250000
+
+後面的數字代表資料監測時，最大的傳送速率，使用 bytes，所以 10Mbps 則為  1.25MBytes，大約是 1250000 Bytes。這個數值程式會自動判斷啦！不過你也可以自己修改，用到這個數字的時候是在你的圖表下方，每一個說明後面的(xx%)時用到的。
+MaxBytes[vbird.adsldns.org_3]: 100
+
+如果你的資料並不是 Bytes 時，例如監測 CPU 負載率時，那這個數值就需要改變啦！
+Options[裝置名稱]：
+Options[vbird.adsldns.org_2]: growright, bits  （用在網路流量中）
+Options[vbird.adsldns.org_3]: growright, nopercent, gauge  （用在 CPU 負載中）
+growright:將資料隨時間變化的順序以右而左繪圖； 
+bits:資料單位為 bits； 
+nopercent:在圖下方的說明文字中，不顯示百分比； 
+gauge:圖表的上限固定！
+
+
+### Global Config Options
+WorkDir: c:\\wwwroot\\mrtg
+### Global Defaults
+# to get bits instead of bytes and graphs growing to the right
+RunAsDaemon:yes
+interval:5
+Options[_]: growright
+Language: chinese
+EnableIPv6: no
+# CPU
+Target[CPU]: .1.3.6.1.4.1.311.1.1.3.1.1.2.1.3.1.48&.1.3.6.1.4.1.311.1.1.3.1.1.2.1.3.1.48:public@127.0.0.1
+Ysize[CPU]: 200
+Xsize[CPU]: 400
+Ytics[CPU]: 10
+MaxBytes[CPU]: 100
+Title[CPU]: Windows2000 CPU使用率
+PageTop[CPU]: <H1>;Windows2000 CPU使用率</H1>;
+ShortLegend[CPU]: %
+YLegend[CPU]: CPU Load
+Legend1[CPU]: CPU Utilization # CPU可用资源
+Legend2[CPU]: .
+Legend3[CPU]: Max Value Per-Interval # 每个周期内CPU的最大负载值
+Legend4[CPU]: .
+LegendI[CPU]: CPU:
+LegendO[CPU]:
+Options[CPU]: gauge, growright, nopercent, unknaszero
+
+
+### Crated by
+### Global Config Options
+RunAsDaemon:yes
+interval:5
+WorkDir: c:\\wwwroot\\mrtg
+### Global Defaults
+# to get bits instead of bytes and graphs growing to the right
+Options[_]: growright
+Language: chinese
+EnableIPv6: no
+#
+# Memory Utilization (SNMP)
+#
+YLegend[memory]: % Memory Used
+Options[memory]: growright,gauge
+Target[memory]: .1.3.6.1.4.1.311.1.1.3.1.1.1.2.0&.1.3.6.1.4.1.311.1.1.3.1.1.1.2.0:public@127.0.0.1
+MaxBytes[memory]: 523444000
+Title[memory]: Memory Used
+ShortLegend[memory]: %
+Legend1[memory]: Vir in next minute
+Legend2[memory]: Phy in next minute
+Legend3[memory]: Maximal 5 Minute Vir
+Legend4[memory]: Maximal 5 Minute Phy
+LegendI[memory]: Vir
+LegendO[memory]: Phy
+PageTop[memory]: <H1>Memory Utilization</H1>
