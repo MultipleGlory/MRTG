@@ -16,10 +16,12 @@ PRTG：Windows下的流量监控软件
 另外，有一点是需要大家注意的，MRTG其实总共需要得到四个数据（前两个用来作图，后两个提供相关资讯），因此你可以按自己需求让MRTG作图，只要你能提供两个数据，这个在后面的监控CPU或者是RAM的地方，加载自己写的程序后，就可以得到了。
 
 #这里讲一下安装前的准备工作
-1）Perl平台的支持，因为MRTG是Perl语言开发的，所以需要安装ActivePerl，下载地址如：http://downloads.activestate.com/ActivePerl/Windows/，当然了安装过程很简单，基本默认就ok了，安装目录Perl在C盘根目录下。
+1）Perl平台的支持，因为MRTG是Perl语言开发的，所以需要安装ActivePerl，下载地址如：  http://downloads.activestate.com/ActivePerl/Windows/
+当然了安装过程很简单，基本默认就ok了，安装目录Perl在C盘根目录下。
 2）IIS服务，这个并不是必须的，但是为了方便浏览最后生成的报表，因为报表都是Html格式的，为了实时且可以远程访问这个页面，所以需要IIS服务来支持其web页面的浏览。
 3）SNMP服务，这个组件是必须的，不管是监控或者是被监控设备都必须要安装该组件，一般在控制面板的“添加删除组件”中找到简单网络管理协议组件安装就ok。
-4）MRTG，这个工具的下载地址为：http://oss.oetiker.ch/mrtg/download.en.html，这里有linux和windows版本的都有，格式略有不同，请注意这里下载的windows版本的格式为zip格式的。关于版本号的选择，建议使用最新版本，目前最新是4年前发布的2.17.4，这里演示使用的是2.17.2。
+4）MRTG，这个工具的下载地址为：http://oss.oetiker.ch/mrtg/download.en.html
+这里有linux和windows版本的都有，格式略有不同，请注意这里下载的windows版本的格式为zip格式的。关于版本号的选择，建议使用最新版本，目前最新是4年前发布的2.17.4，这里演示使用的是2.17.2。
 
 #开始配置MRTG
 1）设置SNMP，首先我们需要在服务里开启SNMP服务，在服务列表中可以找到如下两个服务程序如下图所示：
